@@ -1,0 +1,32 @@
+name: "Codex Terminal"
+version: "0.1.0"
+slug: "codex_terminal"
+description: >-
+  Ingress terminal with Codex CLI and read/write access to the Home Assistant
+  configuration directory.
+startup: "application"
+boot: "auto"
+init: false
+ingress: true
+ingress_port: 7681
+panel_icon: "mdi:console"
+arch:
+  - aarch64
+  - amd64
+  - armv7
+map:
+  - type: homeassistant_config
+    read_only: false
+    path: /workspace
+  - type: addon_config
+    read_only: false
+  - type: share
+    read_only: false
+  - type: ssl
+    read_only: true
+options:
+  working_directory: "/workspace"
+  shell: "/bin/bash"
+schema:
+  working_directory: "str"
+  shell: "str"
