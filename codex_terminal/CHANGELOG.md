@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.8
+
+- updated the repository name to `Christins HAOS Codex Addon`
+- refreshed repository metadata for the add-on repository listing
+
 ## 0.1.7
 
 - added an add-on local changelog file so Home Assistant can show release notes in the add-on UI

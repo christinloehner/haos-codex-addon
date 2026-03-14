@@ -1,5 +1,5 @@
 name: "Codex Terminal"
-version: "0.1.7"
+version: "0.1.8"
 slug: "codex_terminal"
 description: >-
   Ingress terminal with Codex CLI and read/write access to the Home Assistant
