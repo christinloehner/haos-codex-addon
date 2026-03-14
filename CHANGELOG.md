@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.2
+
+- added configurable startup behavior for the terminal
+- added support for starting directly in a new Codex session
+- added support for resuming the most recent Codex session automatically
+- added support for opening the Codex resume picker at startup
+- added shell shortcuts for starting or resuming Codex manually
+
 ## 0.1.1
 
 - added user-focused English documentation

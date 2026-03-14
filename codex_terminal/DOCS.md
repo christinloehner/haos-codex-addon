@@ -4,6 +4,45 @@
 
 The terminal opens with direct access to your Home Assistant configuration directory at `/workspace`, so you can inspect files, edit YAML, run Git commands, and use Codex against your real Home Assistant setup.
 
+## Repository URL
+
+Add this repository to Home Assistant to install the add-on:
+
+```text
+https://github.com/christinloehner/haos-codex-addon
+```
+
+## Installation
+
+### Add the repository
+
+1. Open `Settings -> Add-ons`.
+2. Open the `Add-on Store`.
+3. Open the menu in the top right.
+4. Choose `Repositories`.
+5. Paste this repository URL:
+
+```text
+https://github.com/christinloehner/haos-codex-addon
+```
+
+6. Confirm and close the dialog.
+
+### Install the add-on
+
+1. In the `Add-on Store`, find `Codex Terminal`.
+2. Open the add-on page.
+3. Click `Install`.
+4. Wait until installation finishes.
+
+### Start the add-on
+
+1. Review the configuration if needed.
+2. Click `Start`.
+3. Click `Open Web UI`.
+
+This opens the terminal through Home Assistant Ingress.
+
 ## What You Can Do
 
 - work with `configuration.yaml`, `automations.yaml`, `scripts.yaml`, `secrets.yaml`, `packages/`, and `blueprints/`
@@ -29,6 +68,21 @@ Defines which shell is launched in the terminal.
 
 For normal usage, keep the default unless you have a specific reason to change it.
 
+### `startup_mode`
+
+Default: `shell`
+
+Controls what happens when you open the terminal.
+
+Available values:
+
+- `shell`
+- `codex`
+- `codex_resume_last`
+- `codex_resume_picker`
+
+Use `codex` to start directly in a new Codex session, or `codex_resume_last` if you usually want to continue your most recent session immediately.
+
 ## First Start
 
 After installing and starting the add-on:
@@ -49,6 +103,8 @@ git --version
 codex login
 ```
 
+Your Codex login data is stored persistently and should remain available across restarts.
+
 ## Typical Usage
 
 Start an interactive Codex session:
@@ -64,6 +120,15 @@ Run a direct prompt:
 codex "Review my Home Assistant automations and suggest improvements."
 ```
 
+Start Codex with advanced flags:
+
+```bash
+cd /workspace
+NETWORK_ACCESS=true codex --search --dangerously-bypass-approvals-and-sandbox
+```
+
+This mode is powerful but riskier. It enables web search and removes approval and sandbox protection inside Codex.
+
 Use the terminal normally:
 
 ```bash
@@ -71,6 +136,16 @@ cd /workspace
 git status
 ls packages
 ```
+
+Available shell shortcuts:
+
+```bash
+codex-new
+codex-resume
+codex-last
+```
+
+These let you start a new session, open the resume picker, or resume the latest session manually.
 
 ## Safety Notes
 
@@ -87,3 +162,27 @@ Recommended:
 - create backups or snapshots before major changes
 - use Git if possible
 - review changes before reloading or restarting Home Assistant
+
+Especially be careful with commands like:
+
+```bash
+NETWORK_ACCESS=true codex --search --dangerously-bypass-approvals-and-sandbox
+```
+
+These reduce safety barriers and should only be used if you understand the implications and have your own review process.
+
+## Updating
+
+When a newer version is available:
+
+1. Open `Settings -> Add-ons`.
+2. Open `Codex Terminal`.
+3. Click `Update`.
+4. Wait until the update finishes.
+5. Start the add-on again if needed.
+
+If the update is not shown immediately, refresh or reopen the `Add-on Store`.
+
+## Changelog
+
+Release history is available in [`CHANGELOG.md`](https://github.com/christinloehner/haos-codex-addon/blob/main/CHANGELOG.md).

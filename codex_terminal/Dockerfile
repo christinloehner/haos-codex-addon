@@ -16,6 +16,7 @@ RUN \
 RUN npm install -g @openai/codex
 
 COPY run.sh /run.sh
-RUN chmod 755 /run.sh
+COPY start-terminal.sh /start-terminal.sh
+RUN chmod 755 /run.sh /start-terminal.sh
 
 CMD ["/run.sh"]
