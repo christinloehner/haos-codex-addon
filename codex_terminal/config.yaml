@@ -1,5 +1,5 @@
 name: "Codex Terminal"
-version: "0.1.2"
+version: "0.1.5"
 slug: "codex_terminal"
 description: >-
   Ingress terminal with Codex CLI and read/write access to the Home Assistant
@@ -27,7 +27,7 @@ map:
 options:
   working_directory: "/workspace"
   shell: "/bin/bash"
-  startup_mode: "shell"
+  startup_mode: "menu"
 schema:
   working_directory: "str"
   shell: "str"

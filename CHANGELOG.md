@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.5
+
+- added more standard CLI tools commonly used in Codex workflows
+- added `less`, `tree`, `diffutils`, `patch`, and `make`
+- added `procps`, `util-linux`, and `unzip`
+
+## 0.1.4
+
+- added common Codex CLI helper tools to the add-on image
+- added `ripgrep` (`rg`) for fast code and config search
+- added `fd`, `findutils`, `coreutils`, and `jq`
+- added `yq` for YAML processing
+
+## 0.1.3
+
+- changed the default startup mode from a plain shell to a startup menu
+- added an interactive menu when opening Codex Terminal
+- added menu options for new sessions, resume last, resume picker, shell, and advanced Codex startup
+- added underscore command aliases such as `codex_resume_last` for more intuitive manual usage
+
 ## 0.1.2
 
 - added configurable startup behavior for the terminal

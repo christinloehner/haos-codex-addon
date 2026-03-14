@@ -6,12 +6,26 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
   apk add --no-cache \
     bash \
+    coreutils \
     curl \
+    diffutils \
+    fd \
+    findutils \
     git \
+    jq \
+    less \
+    make \
     nodejs \
     npm \
     openssh-client \
-    ttyd
+    patch \
+    procps \
+    ripgrep \
+    tree \
+    ttyd \
+    unzip \
+    util-linux \
+    yq
 
 RUN npm install -g @openai/codex
 

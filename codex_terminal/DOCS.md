@@ -47,6 +47,7 @@ This opens the terminal through Home Assistant Ingress.
 
 - work with `configuration.yaml`, `automations.yaml`, `scripts.yaml`, `secrets.yaml`, `packages/`, and `blueprints/`
 - run the `codex` CLI directly inside Home Assistant
+- use common helper tools such as `rg`, `fd`, `jq`, `yq`, `grep`, `sed`, `less`, and `tree`
 - use Git if your configuration directory is a repository
 - keep Codex login and user data across add-on restarts
 
@@ -70,25 +71,28 @@ For normal usage, keep the default unless you have a specific reason to change i
 
 ### `startup_mode`
 
-Default: `shell`
+Default: `menu`
 
 Controls what happens when you open the terminal.
 
 Available values:
 
+- `menu`
 - `shell`
 - `codex`
 - `codex_resume_last`
 - `codex_resume_picker`
 
-Use `codex` to start directly in a new Codex session, or `codex_resume_last` if you usually want to continue your most recent session immediately.
+For most users, `menu` is the best setting because it shows clear choices as soon as the add-on opens.
 
 ## First Start
 
 After installing and starting the add-on:
 
 1. Open the add-on through `Open Web UI`.
-2. Verify the environment:
+2. A startup menu should appear.
+3. Choose whether you want to start a new Codex session, resume the last one, open the session picker, or open a shell.
+4. Verify the environment if needed:
 
 ```bash
 pwd
@@ -97,10 +101,21 @@ codex --version
 git --version
 ```
 
-3. Log in to Codex:
+5. Log in to Codex if needed:
 
 ```bash
 codex login
+```
+
+You can also verify the helper tools:
+
+```bash
+rg --version
+fd --version
+jq --version
+yq --version
+tree --version
+less --version
 ```
 
 Your Codex login data is stored persistently and should remain available across restarts.
@@ -135,17 +150,24 @@ Use the terminal normally:
 cd /workspace
 git status
 ls packages
+rg automation .
+yq '.automation' configuration.yaml
 ```
 
 Available shell shortcuts:
 
 ```bash
+codex-menu
 codex-new
 codex-resume
 codex-last
+codex_new
+codex_resume
+codex_resume_last
+codex_resume_picker
 ```
 
-These let you start a new session, open the resume picker, or resume the latest session manually.
+These let you reopen the menu, start a new session, open the resume picker, or resume the latest session manually.
 
 ## Safety Notes
 

@@ -14,7 +14,7 @@ if [[ -z "${SHELL_BIN}" ]]; then
 fi
 
 if [[ -z "${STARTUP_MODE}" ]]; then
-  STARTUP_MODE="shell"
+  STARTUP_MODE="menu"
 fi
 
 if [[ ! -d "${WORKDIR}" ]]; then
@@ -23,11 +23,11 @@ if [[ ! -d "${WORKDIR}" ]]; then
 fi
 
 case "${STARTUP_MODE}" in
-  shell|codex|codex_resume_last|codex_resume_picker)
+  menu|shell|codex|codex_resume_last|codex_resume_picker)
     ;;
   *)
-    bashio::log.warning "Unknown startup_mode ${STARTUP_MODE}, falling back to shell"
-    STARTUP_MODE="shell"
+    bashio::log.warning "Unknown startup_mode ${STARTUP_MODE}, falling back to menu"
+    STARTUP_MODE="menu"
     ;;
 esac
 
@@ -50,6 +50,11 @@ export CODEX_STARTUP_MODE="${STARTUP_MODE}"
 alias codex-new='cd "${CODEX_START_DIR}" && codex'
 alias codex-resume='cd "${CODEX_START_DIR}" && codex resume'
 alias codex-last='cd "${CODEX_START_DIR}" && codex resume --last'
+alias codex-menu='/start-terminal.sh "${CODEX_START_DIR}" "${SHELL}" menu'
+alias codex_new='cd "${CODEX_START_DIR}" && codex'
+alias codex_resume='cd "${CODEX_START_DIR}" && codex resume'
+alias codex_resume_last='cd "${CODEX_START_DIR}" && codex resume --last'
+alias codex_resume_picker='cd "${CODEX_START_DIR}" && codex resume'
 
 cd "${WORKDIR}"
 EOF

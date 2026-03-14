@@ -10,6 +10,7 @@ After installation, `Codex Terminal` gives you:
 
 - a terminal in the Home Assistant UI via Ingress
 - the `codex` CLI preinstalled
+- common helper tools such as `rg`, `fd`, `jq`, `yq`, `grep`, `sed`, `less`, and `tree`
 - direct access to your Home Assistant configuration under `/workspace`
 - persistent Codex login and user data across restarts
 
@@ -105,7 +106,7 @@ The default configuration is:
 ```yaml
 working_directory: /workspace
 shell: /bin/bash
-startup_mode: shell
+startup_mode: menu
 ```
 
 For most users, the defaults are correct.
@@ -161,23 +162,34 @@ For normal usage, leave this unchanged unless you have a specific reason to use 
 Default:
 
 ```yaml
-startup_mode: shell
+startup_mode: menu
 ```
 
 This controls what happens immediately after you open the terminal.
 
 Available values:
 
+- `menu`: show an interactive start menu
 - `shell`: open a normal shell prompt
 - `codex`: start a new interactive Codex session immediately
 - `codex_resume_last`: resume the most recent Codex session automatically
 - `codex_resume_picker`: open the Codex resume picker so you can choose a previous session
 
-If you want the add-on to behave more like a dedicated Codex workspace, `codex` or `codex_resume_last` are the most useful settings.
+For most users, `menu` is the best choice because it gives you clear options immediately when the add-on opens.
 
 ## First Start
 
-When you open the add-on for the first time, a terminal session should appear.
+When you open the add-on for the first time, you should now see a start menu instead of a bare shell prompt.
+
+The menu offers these options:
+
+- start a new Codex session
+- resume the most recent Codex session
+- choose a previous Codex session
+- open a normal shell
+- start Codex with web search and without sandbox or approval prompts
+
+If you prefer the old behavior, you can change `startup_mode` to `shell`.
 
 You can verify the environment with:
 
@@ -186,6 +198,17 @@ pwd
 ls
 codex --version
 git --version
+```
+
+You can also verify the common helper tools:
+
+```bash
+rg --version
+fd --version
+jq --version
+yq --version
+tree --version
+less --version
 ```
 
 Normally:
@@ -223,17 +246,24 @@ Examples:
 cat configuration.yaml
 ls packages
 git status
+rg automation .
+yq '.automation' configuration.yaml
 ```
 
 Helpful shortcuts are available in the shell:
 
 ```bash
+codex-menu
 codex-new
 codex-resume
 codex-last
+codex_new
+codex_resume
+codex_resume_last
+codex_resume_picker
 ```
 
-These commands let you manually start a new Codex session, open the resume picker, or resume the most recent session.
+These commands let you reopen the menu, start a new Codex session, open the resume picker, or resume the most recent session.
 
 ### Start an interactive Codex session
 
