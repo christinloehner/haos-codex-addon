@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.7
+
+- added an add-on local changelog file so Home Assistant can show release notes in the add-on UI
+- aligned changelog links in the documentation with the add-on local changelog
+
 ## 0.1.6
 
 - added `python3`, `py3-pip`, and `sqlite` for Codex workflows that expect Python and SQLite tooling

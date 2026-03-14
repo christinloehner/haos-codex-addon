@@ -4,6 +4,10 @@
 
 The add-on is designed for users who want to manage their Home Assistant configuration from inside HAOS. It provides direct read/write access to your Home Assistant configuration directory, so you can inspect files, edit YAML, use Git, and run Codex against your real setup.
 
+Current release history:
+
+- [codex_terminal/CHANGELOG.md](https://github.com/christinloehner/haos-codex-addon/blob/main/codex_terminal/CHANGELOG.md)
+
 ## What This Add-on Is
 
 After installation, `Codex Terminal` gives you:
@@ -429,7 +433,7 @@ Restore from backup, snapshot, or Git history if available. This add-on does not
 
 ## Changelog
 
-Release history is available in [CHANGELOG.md](https://github.com/christinloehner/haos-codex-addon/blob/main/CHANGELOG.md).
+Release history is available in [codex_terminal/CHANGELOG.md](https://github.com/christinloehner/haos-codex-addon/blob/main/codex_terminal/CHANGELOG.md).
 
 ## In Short
 

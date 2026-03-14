@@ -54,3 +54,4 @@ By default, the add-on opens with a menu so you can choose to:
 Detailed installation, configuration, update instructions, and safety notes are available in the add-on documentation:
 
 - [DOCS.md](https://github.com/christinloehner/haos-codex-addon/blob/main/codex_terminal/DOCS.md)
+- [CHANGELOG.md](https://github.com/christinloehner/haos-codex-addon/blob/main/codex_terminal/CHANGELOG.md)

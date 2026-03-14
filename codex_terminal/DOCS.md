@@ -210,4 +210,4 @@ If the update is not shown immediately, refresh or reopen the `Add-on Store`.
 
 ## Changelog
 
-Release history is available in [`CHANGELOG.md`](https://github.com/christinloehner/haos-codex-addon/blob/main/CHANGELOG.md).
+Release history is available in [`CHANGELOG.md`](https://github.com/christinloehner/haos-codex-addon/blob/main/codex_terminal/CHANGELOG.md).
