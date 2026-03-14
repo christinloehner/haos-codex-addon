@@ -1,31 +1,19 @@
-# HAOS Codex Add-on
+# Codex Terminal for Home Assistant OS
 
-This repository contains a Home Assistant add-on repository with one add-on: `Codex Terminal`.
+`Codex Terminal` is a Home Assistant add-on that opens a terminal directly inside the Home Assistant interface and includes the OpenAI Codex CLI.
 
-The add-on exposes a browser-based terminal through Home Assistant Ingress and includes the OpenAI Codex CLI (`@openai/codex`) out of the box. Its main purpose is to give Codex direct read/write access to your Home Assistant configuration so you can inspect, edit, and manage files from inside Home Assistant OS.
+The add-on is meant for users who want to work on their Home Assistant configuration from inside HAOS. It gives the terminal and Codex direct read/write access to your Home Assistant config directory, so you can inspect files, edit YAML, use Git, and run Codex against your actual setup.
 
-## What This Repository Provides
+## What This Add-on Does
 
-- A custom Home Assistant add-on repository
-- One add-on named `Codex Terminal`
-- An Ingress terminal powered by `ttyd`
-- Preinstalled tools: `bash`, `curl`, `git`, `nodejs`, `npm`, `openssh-client`, `ttyd`, and `codex`
-- Writable access to the Home Assistant configuration directory mounted at `/workspace`
-- Persistent Codex home/configuration stored in the add-on data directory
+After installation, the add-on provides:
 
-## Add-on Overview
+- a terminal in the Home Assistant UI via Ingress
+- the `codex` CLI preinstalled
+- direct access to your Home Assistant configuration under `/workspace`
+- persistent Codex login and user data across restarts
 
-`Codex Terminal` starts a shell inside Home Assistant and opens it in the Home Assistant UI via Ingress.
-
-The add-on is configured to:
-
-- start automatically with Home Assistant
-- expose its UI only through Ingress
-- launch a writable terminal session on port `7681`
-- mount the Home Assistant configuration directory at `/workspace`
-- keep Codex login state and shell home data in `/data/codex-home`
-
-This makes it possible to work directly with files such as:
+Typical files you can work with include:
 
 - `configuration.yaml`
 - `automations.yaml`
@@ -33,112 +21,108 @@ This makes it possible to work directly with files such as:
 - `secrets.yaml`
 - `packages/`
 - `blueprints/`
-- any other files inside your Home Assistant config directory
 
-## Repository Structure
+## Who This Is For
 
-- [`repository.yaml`](/home/christin/haos-codex-addon-github/repository.yaml): Home Assistant add-on repository metadata
-- [`codex_terminal/config.yaml`](/home/christin/haos-codex-addon-github/codex_terminal/config.yaml): add-on manifest and configuration schema
-- [`codex_terminal/Dockerfile`](/home/christin/haos-codex-addon-github/codex_terminal/Dockerfile): add-on container build definition
-- [`codex_terminal/run.sh`](/home/christin/haos-codex-addon-github/codex_terminal/run.sh): startup script that configures the environment and launches `ttyd`
-- [`codex_terminal/README.md`](/home/christin/haos-codex-addon-github/codex_terminal/README.md): short add-on store summary
-- [`codex_terminal/DOCS.md`](/home/christin/haos-codex-addon-github/codex_terminal/DOCS.md): add-on documentation shown in Home Assistant
+This add-on is for users who explicitly want powerful terminal access inside Home Assistant OS.
 
-## How the Add-on Works
+It is useful if you want to:
 
-At startup, the add-on:
+- inspect and edit Home Assistant YAML files
+- run Codex directly against your live Home Assistant configuration
+- use Git commands inside your config directory
+- review, refactor, or explain existing automations and packages
 
-1. Reads the configured `working_directory` and `shell`.
-2. Falls back to `/workspace` and `/bin/bash` if those options are empty.
-3. Ensures `/data/codex-home` exists.
-4. Sets `HOME` and `CODEX_HOME` to `/data/codex-home`.
-5. Writes a `.bashrc` that sets up the shell environment and changes into `/workspace`.
-6. Starts `ttyd` on port `7681` with write access enabled.
-7. Launches the configured shell as a login shell.
+It is not a locked-down or beginner-safe add-on. Anything you do in the terminal can affect your Home Assistant configuration.
 
-Because the Home Assistant config directory is mounted read/write, any command run manually in the terminal or through Codex can modify your actual Home Assistant configuration.
+## Before You Install
 
-## Supported Architectures
+You should understand these points before using the add-on:
 
-The add-on manifest declares support for:
+- the Home Assistant configuration directory is mounted with write access
+- commands executed manually or through Codex can change or delete files
+- incorrect changes can break automations, scripts, dashboards, or Home Assistant startup
 
-- `aarch64`
-- `amd64`
-- `armv7`
+Recommended before use:
 
-## Installation
+- create a Home Assistant backup or snapshot
+- use Git for your Home Assistant config if possible
+- only run prompts and commands you understand
 
-### 1. Publish or fork this repository
+## Installation in Home Assistant
 
-Host this repository somewhere Home Assistant can reach, typically on GitHub.
+If this add-on repository has already been added to your Home Assistant instance, installation is simple:
 
-Before using it, verify the repository URL in [`repository.yaml`](/home/christin/haos-codex-addon-github/repository.yaml) matches the actual Git repository URL you want to add to Home Assistant.
+1. Open `Settings -> Add-ons`.
+2. Open the `Add-on Store`.
+3. Find `Codex Terminal`.
+4. Open the add-on page.
+5. Click `Install`.
+6. Wait until installation finishes.
 
-### 2. Add the repository to Home Assistant
+If the repository is not yet available in your Home Assistant add-on store, the person providing this add-on to you must give you the repository URL first.
 
-In Home Assistant:
+## Updating the Add-on
 
-1. Go to `Settings -> Add-ons -> Add-on Store`.
-2. Open the repository menu.
-3. Add the Git URL of this repository.
-4. Refresh the add-on store if necessary.
+When a new add-on version is published in the same repository, Home Assistant should show an update on the add-on page.
 
-### 3. Install the add-on
+To update:
 
-1. Open the add-on `Codex Terminal`.
-2. Click `Install`.
-3. Review the configuration options.
-4. Start the add-on.
-5. Open it through Ingress.
+1. Open `Settings -> Add-ons`.
+2. Open `Codex Terminal`.
+3. If an update is available, click `Update`.
+4. Wait for the update to finish.
+5. Start the add-on again if it does not restart automatically.
+
+If Home Assistant does not show the update immediately, open the `Add-on Store` and refresh the repository data, then check the add-on page again.
+
+Your add-on configuration and persistent Codex data should remain in place because they are stored outside the container image.
 
 ## Configuration
 
-The add-on currently exposes two options.
+The add-on exposes two configuration options.
 
 ### `working_directory`
 
-- Type: `string`
-- Default: `/workspace`
+Default:
 
-Defines the working directory used when `ttyd` starts the shell.
+```yaml
+working_directory: /workspace
+```
 
-Use this if you want the terminal to open in a subdirectory of the mounted Home Assistant configuration, for example:
+This defines the directory where the terminal starts.
+
+For most users, the default `/workspace` is correct because it points to the mounted Home Assistant configuration directory.
+
+If you want the terminal to open in a specific subdirectory, you can change it, for example:
 
 ```yaml
 working_directory: /workspace/packages
 ```
 
-If the configured directory does not exist, the add-on logs a warning and falls back to `/workspace`.
+If the directory does not exist, the add-on falls back to `/workspace`.
 
 ### `shell`
 
-- Type: `string`
-- Default: `/bin/bash`
-
-Defines the shell binary launched by the terminal session.
-
-Example:
+Default:
 
 ```yaml
 shell: /bin/bash
 ```
 
-The configured shell is started as a login shell.
+This defines which shell is launched inside the terminal.
 
-## Mounted Paths
+For normal usage, leave this at the default unless you have a specific reason to change it.
 
-The add-on mounts the following Home Assistant paths:
+## First Start
 
-- Home Assistant configuration directory to `/workspace` with write access
-- Add-on data directory with write access
-- Shared directory with write access
-- SSL directory with read-only access
+After installation:
 
-In practice, `/workspace` is the most important mount point because it contains the files you usually want Codex to inspect or edit.
+1. Start the add-on.
+2. Open it via `Open Web UI` or directly through Home Assistant Ingress.
+3. A terminal session should appear.
 
-## First Start and Codex Login
-
-After opening the add-on through Ingress, verify the environment:
+When the terminal opens, you can verify the environment with:
 
 ```bash
 pwd
@@ -147,109 +131,124 @@ codex --version
 git --version
 ```
 
-Then authenticate Codex:
+Normally, you should be working inside `/workspace`, which is your Home Assistant config directory.
+
+## Logging In to Codex
+
+Before using Codex, log in once:
 
 ```bash
 codex login
 ```
 
-Because `HOME` and `CODEX_HOME` are stored in `/data/codex-home`, your Codex configuration and login state are designed to persist across add-on restarts.
+Follow the authentication flow shown in the terminal.
 
-## Typical Usage
+The add-on stores Codex user data persistently, so your login should remain available across restarts.
 
-Start an interactive Codex session:
+## How To Use the Add-on
+
+### Basic terminal usage
+
+You can use the add-on like a normal shell inside your Home Assistant config:
+
+```bash
+cd /workspace
+ls
+```
+
+Examples:
+
+```bash
+cat configuration.yaml
+ls packages
+git status
+```
+
+### Start an interactive Codex session
 
 ```bash
 cd /workspace
 codex
 ```
 
-Run a direct prompt:
+This is useful if you want an interactive workflow and want Codex to inspect or modify your Home Assistant files.
+
+### Run a direct Codex prompt
 
 ```bash
-codex "Review my Home Assistant YAML files and suggest improvements."
+codex "Review my Home Assistant automations and suggest improvements."
 ```
 
-Inspect your configuration with normal shell tools:
+Other examples:
 
 ```bash
-cd /workspace
-find . -maxdepth 2 -type f | sort
-git status
+codex "Explain my configuration.yaml and point out risky parts."
+codex "Refactor my packages into a cleaner structure."
+codex "Look through scripts.yaml and identify duplicates."
 ```
 
-Work on packages or automations:
+## Common Use Cases
 
-```bash
-cd /workspace/packages
-codex "Explain what these Home Assistant package files do."
-```
+Users typically install this add-on to:
 
-## Example Use Cases
+- review existing Home Assistant YAML
+- clean up large automation setups
+- search through packages and blueprints
+- let Codex explain unfamiliar configuration files
+- apply targeted edits without leaving the Home Assistant UI
+- run Git commands in a configuration repository
 
-- Review `configuration.yaml` for structural problems
-- Refactor automations into `packages/`
-- Search for duplicate entities or scripts
-- Use Git inside your Home Assistant configuration if that directory is a repository
-- Let Codex explain unfamiliar YAML files before you edit them
-- Perform targeted edits to dashboards, scripts, automations, and blueprints
+## Important Safety Notes
 
-## Security and Risk
+This add-on is intentionally powerful.
 
-This add-on is intentionally powerful. That is the entire point of it, but it also means the risk is real.
+That means:
 
-Important implications:
+- it can modify your Home Assistant configuration directly
+- it can break your setup if you run destructive commands
+- Codex suggestions should be reviewed before you rely on them
 
-- The Home Assistant configuration directory is mounted with write access.
-- Commands executed in the terminal can modify or delete configuration files.
-- Codex can propose and apply changes directly inside your Home Assistant config.
-- If you use Git in `/workspace`, you can track changes, but Git does not prevent destructive commands.
-- The add-on is better suited for personal or tightly controlled environments than for public distribution.
+Good practice:
 
-Recommended precautions:
-
-- Keep backups or snapshots of your Home Assistant instance.
-- Use Git for your Home Assistant configuration whenever possible.
-- Review generated changes before restarting Home Assistant.
-- Be deliberate about what prompts you run through Codex.
+- make backups before major changes
+- check YAML carefully after edits
+- review diffs if you use Git
+- restart or reload Home Assistant only after confirming changes are correct
 
 ## Troubleshooting
 
-### The terminal opens in the wrong directory
+### The terminal starts in the wrong place
 
-Check the `working_directory` option. If it points to a path that does not exist, the add-on falls back to `/workspace`.
+Check the `working_directory` option. If it points to a missing path, the add-on falls back to `/workspace`.
 
-### `codex` is not logged in after a restart
+### I do not see my Home Assistant files
 
-The add-on stores Codex home data in `/data/codex-home`. If login state does not persist, inspect the add-on logs and verify the add-on data directory is functioning normally.
+Your config should be available under `/workspace`. If not, restart the add-on and check whether it opened correctly.
 
-### The shell is not what I expected
+### `codex` is not recognized
 
-Check the `shell` option in the add-on configuration. The startup script uses that value and launches it as a login shell.
+Open the add-on terminal again and run:
 
-### I cannot find my Home Assistant files
+```bash
+codex --version
+```
 
-They should be available under `/workspace`. If they are not, verify the add-on is running with the expected Home Assistant config mapping.
+If that still fails, restart the add-on and inspect the add-on logs.
 
-### Changes made in the terminal broke my setup
+### Codex login did not persist
 
-Restore from Git, a Home Assistant backup, or a snapshot. This add-on does not add any safety layer on top of your file access.
+Log in again with:
 
-## Development Notes
+```bash
+codex login
+```
 
-The container image is intentionally minimal. It installs:
+If the problem continues, check the add-on logs and the add-on's persistent data handling.
 
-- `bash`
-- `curl`
-- `git`
-- `nodejs`
-- `npm`
-- `openssh-client`
-- `ttyd`
-- `@openai/codex` via global `npm install`
+### I changed files and Home Assistant now has problems
 
-The startup behavior is implemented in [`codex_terminal/run.sh`](/home/christin/haos-codex-addon-github/codex_terminal/run.sh), and the image definition lives in [`codex_terminal/Dockerfile`](/home/christin/haos-codex-addon-github/codex_terminal/Dockerfile).
+Restore from backup, snapshot, or Git history if available. This add-on does not prevent damaging file changes.
 
-## Intended Audience
+## In Short
 
-This project is a practical add-on for users who want direct terminal access and Codex-assisted editing inside Home Assistant OS. It is not designed as a locked-down, beginner-safe add-on. It is designed for users who explicitly want powerful access to their Home Assistant configuration.
+`Codex Terminal` gives you a terminal and Codex CLI directly inside Home Assistant OS, with access to your real configuration files. That is exactly what makes it useful, and exactly what makes it sensitive. Use it like a powerful admin tool, not like a sandbox.

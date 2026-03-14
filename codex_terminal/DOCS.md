@@ -1,61 +1,89 @@
 # Codex Terminal
 
-`Codex Terminal` startet ein Ingress-Terminal in Home Assistant und bindet den Home-Assistant-Konfigurationsordner unter `/workspace` mit Schreibrechten ein.
+`Codex Terminal` adds a terminal to the Home Assistant UI and includes the OpenAI Codex CLI.
 
-## Was das Add-on kann
+The terminal opens with direct access to your Home Assistant configuration directory at `/workspace`, so you can inspect files, edit YAML, run Git commands, and use Codex against your real Home Assistant setup.
 
-- Zugriff auf `configuration.yaml`, `automations.yaml`, `scripts.yaml`, `packages/`, `blueprints/` und weitere Dateien unter `/workspace`
-- Vorinstalliertes `codex` CLI
-- Persistente Codex-Konfiguration unter `/data/codex-home`
-- Nutzung direkt ueber die Home-Assistant-Oberflaeche per Ingress
+## What You Can Do
 
-## Nach der Installation
+- work with `configuration.yaml`, `automations.yaml`, `scripts.yaml`, `secrets.yaml`, `packages/`, and `blueprints/`
+- run the `codex` CLI directly inside Home Assistant
+- use Git if your configuration directory is a repository
+- keep Codex login and user data across add-on restarts
 
-Ingress oeffnen und im Terminal zunaechst pruefen:
-
-```bash
-pwd
-ls
-codex --version
-```
-
-Danach Codex authentifizieren:
-
-```bash
-codex login
-```
-
-## Optionen
+## Configuration
 
 ### `working_directory`
 
 Default: `/workspace`
 
-Arbeitsverzeichnis beim Start des Terminals.
+Defines the directory where the terminal starts.
+
+For most users, the default is correct.
 
 ### `shell`
 
 Default: `/bin/bash`
 
-Shell, die im Terminal gestartet werden soll.
+Defines which shell is launched in the terminal.
 
-## Sicherheit
+For normal usage, keep the default unless you have a specific reason to change it.
 
-Dieses Add-on ist bewusst maechtig:
+## First Start
 
-- Der Home-Assistant-Konfigurationsordner ist read/write gemappt.
-- Alles, was im Terminal oder ueber Codex ausgefuehrt wird, kann deine HA-Konfiguration veraendern.
-- Fuer ein oeffentlich verteiltes Add-on waere das zu weitreichend. Fuer dein eigenes HAOS-System ist es genau der Zweck.
+After installing and starting the add-on:
 
-## Typischer Ablauf
+1. Open the add-on through `Open Web UI`.
+2. Verify the environment:
+
+```bash
+pwd
+ls
+codex --version
+git --version
+```
+
+3. Log in to Codex:
+
+```bash
+codex login
+```
+
+## Typical Usage
+
+Start an interactive Codex session:
 
 ```bash
 cd /workspace
 codex
 ```
 
-Oder direkt mit Prompt:
+Run a direct prompt:
 
 ```bash
-codex "Pruefe meine Home Assistant YAML-Dateien und schlage Verbesserungen vor."
+codex "Review my Home Assistant automations and suggest improvements."
 ```
+
+Use the terminal normally:
+
+```bash
+cd /workspace
+git status
+ls packages
+```
+
+## Safety Notes
+
+This add-on has write access to your Home Assistant configuration.
+
+That means:
+
+- commands in the terminal can change or delete files
+- Codex can make direct changes to your configuration
+- mistakes can break your Home Assistant setup
+
+Recommended:
+
+- create backups or snapshots before major changes
+- use Git if possible
+- review changes before reloading or restarting Home Assistant

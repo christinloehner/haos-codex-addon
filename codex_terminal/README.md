@@ -1,3 +1,3 @@
 # Codex Terminal
 
-Privates Home-Assistant-Add-on fuer ein Ingress-Terminal mit installiertem Codex CLI und read/write Zugriff auf die Home-Assistant-Konfiguration.
+Home Assistant add-on that provides an Ingress terminal with the OpenAI Codex CLI and read/write access to your Home Assistant configuration.
