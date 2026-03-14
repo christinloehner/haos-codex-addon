@@ -19,8 +19,11 @@ RUN \
     npm \
     openssh-client \
     patch \
+    py3-pip \
+    python3 \
     procps \
     ripgrep \
+    sqlite \
     tree \
     ttyd \
     unzip \

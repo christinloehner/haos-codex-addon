@@ -47,7 +47,7 @@ This opens the terminal through Home Assistant Ingress.
 
 - work with `configuration.yaml`, `automations.yaml`, `scripts.yaml`, `secrets.yaml`, `packages/`, and `blueprints/`
 - run the `codex` CLI directly inside Home Assistant
-- use common helper tools such as `rg`, `fd`, `jq`, `yq`, `grep`, `sed`, `less`, and `tree`
+- use common helper tools such as `rg`, `fd`, `jq`, `yq`, `python3`, `pip`, `sqlite3`, `grep`, `sed`, `less`, and `tree`
 - use Git if your configuration directory is a repository
 - keep Codex login and user data across add-on restarts
 
@@ -114,6 +114,9 @@ rg --version
 fd --version
 jq --version
 yq --version
+python3 --version
+pip --version
+sqlite3 --version
 tree --version
 less --version
 ```

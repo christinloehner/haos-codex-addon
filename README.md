@@ -10,7 +10,7 @@ After installation, `Codex Terminal` gives you:
 
 - a terminal in the Home Assistant UI via Ingress
 - the `codex` CLI preinstalled
-- common helper tools such as `rg`, `fd`, `jq`, `yq`, `grep`, `sed`, `less`, and `tree`
+- common helper tools such as `rg`, `fd`, `jq`, `yq`, `python3`, `pip`, `sqlite3`, `grep`, `sed`, `less`, and `tree`
 - direct access to your Home Assistant configuration under `/workspace`
 - persistent Codex login and user data across restarts
 
@@ -207,6 +207,9 @@ rg --version
 fd --version
 jq --version
 yq --version
+python3 --version
+pip --version
+sqlite3 --version
 tree --version
 less --version
 ```

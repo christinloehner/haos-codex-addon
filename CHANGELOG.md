@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.6
+
+- added `python3`, `py3-pip`, and `sqlite` for Codex workflows that expect Python and SQLite tooling
+- kept `npm` and Node.js available for JavaScript- and Home Assistant-related tooling
+
 ## 0.1.5
 
 - added more standard CLI tools commonly used in Codex workflows
